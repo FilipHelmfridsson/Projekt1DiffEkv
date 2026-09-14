@@ -20,13 +20,13 @@ ds = fvel(t ,s ,b , aL , aR , wL , wR, theta0);
 %% _____ Euler _____
 
 
-for i = [t: h: tslut];
-    s(end+1, :) = s(end, :) + h * fvel(i, s(end, :), b, aL, aR, wL, wR, theta0);
-end
+% for i = [t: h: tslut];
+%     s(end+1, :) = s(end, :) + h * fvel(i, s(end, :), b, aL, aR, wL, wR, theta0);
+% end
 
 %disp(s);
-plot(s(:,1),s(:,2));
-axis equal;
+%plot(s(:,1),s(:,2));
+%axis equal;
     
 function ds = fvel(t, s, b, aL, aR, wL, wR, theta0)
     B = (wR + wL) ./ 2;
@@ -40,3 +40,22 @@ function ds = fvel(t, s, b, aL, aR, wL, wR, theta0)
 
     ds = [dxdt,dydt,dthetadt];
 end
+
+
+%%________Runge kutta 4________%
+
+for i = [t: h: tslut];
+    k1 = fvel(i, s(end, :), b, aL, aR, wL, wR, theta0);
+
+    k2 = fvel(i + h / 2, s(end, :) + (h / 2) .* k1, b, aL, aR, wL, wR, theta0);
+
+    k3 = fvel(i + h / 2, s(end, :) + (h / 2) .* k2, b, aL, aR, wL, wR, theta0);
+
+    k4 = fvel(i + h, s(end, :) + h .* k3, b, aL, aR, wL, wR, theta0);
+    
+    s(end+1, :) = s(end, :) + (h / 6) .* (k1 +  2 .* k2 + 2 .* k3 + k4);
+end
+
+%disp(s);
+plot(s(:,1),s(:,2));
+axis equal;
