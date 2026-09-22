@@ -64,6 +64,7 @@ for k = [0,1,2]
     end
 
     %disp(s);
+    figure;
     plot(s(:,1),s(:,2), 'b');
     axis equal;
 
