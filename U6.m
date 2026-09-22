@@ -33,23 +33,39 @@ hold on;
 aR = 1.0; % Gissad, vald till 1 utifrån plot.
 tolerans = 1e-6;
 
-%for i = 1:max_iteration
+i = 1;
+felGammal = 1;
+felGammalGammal = 1;
 while 1
-    f_varde = f(aR)
-    df_varde = df(aR)
+    f_varde = f(aR);
+    df_varde = df(aR);
 
     aR_ny = aR - f_varde / df_varde;
-    fel = abs(aR_ny - aR)
+    fel = abs(aR_ny - aR);
     
+    disp("Iteration:")
     disp(i)
+    disp("Nytt aR värde:")
     disp(aR_ny)
+    disp("Felet är:")
     disp(fel)
+    if i >= 3
+        konvergensOrdning = log(fel / felGammal) / log(felGammal / felGammalGammal);
+        disp("Konvergensordningen är:")
+        disp(konvergensOrdning)
+    else
+        konvergensOrdning = 0;
+        disp("Det krävs ett par iterationer för att beräkna konvergensordning")
+    end
 
     if fel < tolerans
         disp('hittat aR!')
-        disp( aR_ny)
+        disp(aR_ny)
         break
     end
 
     aR = aR_ny;
+    felGammalGammal=felGammal;
+    felGammal = fel;
+    i = i+1;
 end

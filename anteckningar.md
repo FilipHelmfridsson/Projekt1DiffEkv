@@ -41,4 +41,4 @@ U5)
 
 ------------------------
 U6)
-   b) Roboten rör sig i en cirkel med radie 1.
+   b) Roboten får radien R = 1.0 för alla t >= 0. Detta beror på att kvoten mellan hastigheterna gör att den rör sig i en perfekt cirkel, även om den kör snabbare och snabbare.

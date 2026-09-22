@@ -15,7 +15,7 @@ function [xbar, ybar, R, Tlap] = robotcircle(b, wL, wR, x0, y0, theta0)
 
     xbar = x0 - (B / D) * sin(theta0);
 
-    ybar = y0 - (B / D) * cos(theta0);
+    ybar = y0 + (B / D) * cos(theta0);
     
     Tlap = (2. * pi .* b) / abs(wR - wL);
     

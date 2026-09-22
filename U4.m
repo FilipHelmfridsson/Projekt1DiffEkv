@@ -11,27 +11,16 @@ x0 = 0.0;         % start x-kordinat
 y0 = 0.0;         % Start y-kordinat
 theta0 = 0.0;     % startvinkel (rad)
 
-tslut = 7*pi/8;
+tslut = pi;
 
-function ds = fvel(t, s, b, aL, aR, wL, wR, theta0)
-    B = (wR + wL) ./ 2;
-    D = (wR - wL) ./ b;
-    C = (aR - aL) ./ (2*b);
-    A = (aR + aL) ./ 2;
-
-    dxdt = (A * t + B) * cos(C * (t^2) + D * t + theta0);
-    dydt = (A * t + B) * sin(C * (t^2) + D * t + theta0);
-    dthetadt = 2 * C * t + D;
-
-    ds = [dxdt,dydt,dthetadt]';
-end
-
-% test
 
 tspann = [0, tslut];
 s0 = [x0, y0, theta0];
-options = odeset( 'RelTol' ,1e-8 , 'AbsTol' ,1e-8);
-[t,s] = ode45(@(t,s) fvel(t,s,b,aL,aR,wL,wR,theta0), tspann, s0, options);
+options = odeset( 'RelTol', 1e-8, 'AbsTol', 1e-8, 'Refine', 5);
+[t,s] = ode45(@(t,s) fvel(t,s,b,aL,aR,wL,wR)', tspann, s0, options);
+
+disp("Antal tidssteg:")
+disp(length(t))
 
 plot(s(:,1), s(:,2), 'k')
 axis equal
@@ -53,5 +42,3 @@ plot(t, [felvektory,felvektorx]);
 grid on
 xlabel('t')
 ylabel('x,y')
-
-length(t)
