@@ -25,17 +25,18 @@ felvektor = [];
 
 
 for k = [0,1,2]
-    heuler = tslut/100;
+    heuler = tslut/100; %%%
     heuler = heuler / (2^k);
 
     s = [x0,y0,theta0]; % stratposition och vinkelB
 
-    for n = 1:(100*(2^k));
+    for n = 1:(100*(2^k)); %%%
         i = (n-1) * heuler;
         s(end+1, :) = s(end, :) + heuler * fvel(i, s(end, :), b, aL, aR, wL, wR);
     end
 
     %disp(s);
+    hold on;
     plot(s(:,1),s(:,2), 'r')
     axis equal;
 
@@ -64,7 +65,6 @@ for k = [0,1,2]
     end
 
     %disp(s);
-    figure;
     plot(s(:,1),s(:,2), 'b');
     axis equal;
 
