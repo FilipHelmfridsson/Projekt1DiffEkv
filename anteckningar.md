@@ -19,10 +19,12 @@ y_slut =
 
 felrk4 =
 
-    0.0599
+    1.3225e-11
 
 
 feleuler =
+
+    0.0030
 
 _________________________________________________________________________________________________
 f) Rk4 har noggranhetsordningen 4 och euler har noggranhetsordningen 1, enligt förväntan

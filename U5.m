@@ -35,7 +35,7 @@ close all;
 % theta0 = 0.0;     % startvinkel (rad)
 
 
-%Fall 4 (för uppg. 6)
+% Fall 4 (för uppg. 6)
 t = 0.0;          % tid (s)
 b = 1.0;          % hjulbasen (m)
 aR = 1.2;         % acceleration höger hjul (m/s^2)

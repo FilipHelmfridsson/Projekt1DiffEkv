@@ -2,7 +2,7 @@ clear all;
 close all;
 clc;
 
-t = 2.0;          % tid (s)
+t = 1.0;          % tid (s)
 b = 1.0;          % hjulbasen (m)
 aL = 0.4;         % acceleration vänster hjul (m/s^2)
 wL = 1.0;         % hastighet vänster hjul (m/s)
