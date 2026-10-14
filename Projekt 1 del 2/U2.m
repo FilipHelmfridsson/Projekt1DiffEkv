@@ -1,7 +1,7 @@
 clear all;
 close all;
 
-N = 200;
+N = 100;
 tslut = 2*pi;
 u = [1;0;0;1];
 

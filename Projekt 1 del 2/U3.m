@@ -28,7 +28,7 @@ function u_ny = trapetsmetoden(u, h)
     while 1
 
         % Residual för trapetsmetoden
-        G = z - u - h/2 * (planetrhs(u) + planetrhs(z));
+        G = z - u - h/2 * (planetrhs(u) + planetrhs(z)); %Detta är u^(n+1) KOLLA UPP INNAN REDOVISNING
 
         % Jacobian för högerledet vid aktuellt z
         J = planetJacobian(z);
@@ -50,9 +50,10 @@ function u_ny = trapetsmetoden(u, h)
     end
 end
 
-h = 0.01;
+N = 100;
 u = [1;0;0;1]; % MÅSTE GISSA DENNA
 tslut = 2*pi;
+h = tslut/N;
 
 resultatVektor = [];
 for i = [0:h:tslut]
@@ -66,36 +67,36 @@ axis equal;
 
 tolerans = 1e-6;
 
-while 1
-    g_varde = g(aR, h);
-    dg_varde = planetJacobian(u); %Dela med jacobianen istället
+% while 1
+%     g_varde = g(aR, h);
+%     dg_varde = eye(4) - h/2 * J;
 
-    u_ny = u - (g_varde / dg_varde);
-    fel = abs(u_ny - u);
+%     u_ny = u - (g_varde / dg_varde);
+%     fel = abs(u_ny - u);
     
-    disp("Iteration:")
-    disp(i)
-    disp("Nytt aR värde:")
-    disp(aR_ny)
-    disp("Felet är:")
-    disp(fel)
-    if i >= 3
-        konvergensOrdning = log(fel / felGammal) / log(felGammal / felGammalGammal);
-        disp("Konvergensordningen är:")
-        disp(konvergensOrdning)
-    else
-        konvergensOrdning = 0;
-        disp("Det krävs ett par iterationer för att beräkna konvergensordning")
-    end
+%     disp("Iteration:")
+%     disp(i)
+%     disp("Nytt aR värde:")
+%     disp(aR_ny)
+%     disp("Felet är:")
+%     disp(fel)
+%     if i >= 3
+%         konvergensOrdning = log(fel / felGammal) / log(felGammal / felGammalGammal);
+%         disp("Konvergensordningen är:")
+%         disp(konvergensOrdning)
+%     else
+%         konvergensOrdning = 0;
+%         disp("Det krävs ett par iterationer för att beräkna konvergensordning")
+%     end
 
-    if max(fel) < tolerans
-        disp('hittat aR!')
-        disp(aR_ny)
-        break
-    end
+%     if max(fel) < tolerans
+%         disp('hittat aR!')
+%         disp(aR_ny)
+%         break
+%     end
 
-    aR = aR_ny;
-    felGammalGammal=felGammal;
-    felGammal = fel;
-    i = i+1;
-end
+%     aR = aR_ny;
+%     felGammalGammal=felGammal;
+%     felGammal = fel;
+%     i = i+1;
+% end
