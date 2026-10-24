@@ -51,7 +51,7 @@ function resultat = trapets(u,N,tslut)
     h = tslut/N;
 
     resultatVektor = u';
-    for i = [1:(N-1)]
+    for i = 1:N
         u = trapetsmetoden(u, h);
         resultatVektor = [resultatVektor; u'];
     end
