@@ -15,19 +15,35 @@ for i = [1]
     u_stormer = stormer(u,Ni,tslut);
 end
 
-E_euler = 1/2*((u_euler(end,3)^2) + u_euler(end,4)^2) - 1/sqrt((u_euler(end,1)^2) + (u_euler(end,2)^2));
-
-E_trapets = 1/2*((u_trapets(end,3)^2) + u_trapets(end,4)^2) - 1/sqrt((u_trapets(end,1)^2) + (u_trapets(end,2)^2));
-
-E_stormer = 1/2*((u_stormer(end,3)^2) + u_stormer(end,4)^2) - 1/sqrt((u_stormer(end,1)^2) + (u_stormer(end,2)^2));
-
 E0 = - 1/2; %Beräknat utifrån begynnelsevärden
 
 
-deltaE_euler = E_euler - E0
-deltaE_trapets = E_trapets - E0
-deltaE_stormer = E_stormer - E0
+E_euler = 1/2*(u_euler(:,3).^2 + u_euler(:,4).^2) - 1./sqrt(u_euler(:,1).^2 + u_euler(:,2).^2);
 
+E_trapets = 1/2*(u_trapets(:,3).^2 + u_trapets(:,4).^2) - 1./sqrt(u_trapets(:,1).^2 + u_trapets(:,2).^2);
+
+E_stormer = 1/2*(u_stormer(:,3).^2 + u_stormer(:,4).^2) - 1./sqrt(u_stormer(:,1).^2 + u_stormer(:,2).^2);
+
+
+deltaE_euler = E_euler - E0;
+deltaE_trapets = E_trapets - E0;
+deltaE_stormer = E_stormer - E0;
+
+% Tidsvektor
+h2 = tslut/Ni;
+t = [0:h2:tslut];
+
+
+plot(t,deltaE_euler,'r')
+figure;
+plot(t,deltaE_trapets,'b')
+figure;
+plot(t,deltaE_stormer,'g')
+
+% Energifel
+deltaE_euler = E_euler(end) - E0
+deltaE_trapets = E_trapets(end) - E0
+deltaE_stormer = E_stormer(end) - E0
 
 % b)
 
@@ -38,6 +54,7 @@ N = tslut / h;
 u_stormer2 = stormer(u,Ni,tslut);
 E_stormer2 = 1/2*((u_stormer(end,3)^2) + u_stormer(end,4)^2) - 1/sqrt((u_stormer(end,1)^2) + (u_stormer(end,2)^2));
 deltaE_stormer2 = E_stormer2 - E0
+
 %"Felet" i energin växer inte alls med fler perioder! Den hålls konstant,  
 %vilket matchar dess beskrivning med att "kretsa" kring energin.
 
