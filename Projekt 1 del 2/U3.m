@@ -28,7 +28,7 @@ function u_ny = trapetsmetoden(u, h)
     while 1
 
         % Residual för trapetsmetoden
-        G = z - u - h/2 * (planetrhs(u) + planetrhs(z)); %Detta är u^(n+1) KOLLA UPP INNAN REDOVISNING
+        G = z - u - h/2 * (planetrhs(u) + planetrhs(z));
 
         % Jacobian för högerledet vid aktuellt z
         J = planetJacobian(z);
