@@ -16,20 +16,27 @@ plot(x, w - uana(x))
 xlabel('x'), ylabel('w - u'), title('Fel, N = 400')
 
 %% e) Konvergensstudie
-Ns  = [50 100 200 400 800];
-fel = zeros(size(Ns));
-for k = 1:length(Ns)
-    [x, w] = bvp_fdm(Ns(k), f, gamma, delta);
-    r = w(2:end-1) - uana(x(2:end-1));      % inre punkter
-    fel(k) = sqrt(mean(r.^2));              % diskret 2-norm (11)
+Nlista = [50 100 200 400 800];
+fel = zeros(1, length(Nlista));
+for i = 1:length(Nlista)
+    N = Nlista(i);
+    [x, w] = bvp_fdm(N, f, gamma, delta);
+    r = w(2:N) - uana(x(2:N));             % felet i de inre punkterna
+    fel(i) = sqrt(sum(r.^2) / (N-1));      % normaliserad 2-norm, formel (11)
 end
-ordning = [NaN, log2(fel(1:end-1) ./ fel(2:end))];
-table(Ns', fel', ordning', 'VariableNames', {'N', 'Fel', 'Ordning'})
+
+% Felet minskar med 2^p när h halveras  =>  p = log2(fel_N / fel_2N)
+ordning = log2(fel(1:end-1) ./ fel(2:end));
+
+disp('       N         fel')
+disp([Nlista' fel'])
+disp('Ordning mellan på varandra följande N:')
+disp(ordning)
 
 %% f) f = exp(-(x-pi)^2)
 g = @(x) exp(-(x - pi).^2);
 [x, w1] = bvp_fdm(400, g, 0, 0);
-[~, w2] = bvp_fdm(400, g, 1, 0);
+[x, w2] = bvp_fdm(400, g, 1, 0);
 figure
 plot(x, w1, x, w2)
 legend('\gamma = 0, \delta = 0', '\gamma = 1, \delta = 0'), xlabel('x'), ylabel('u')
