@@ -33,7 +33,7 @@ disp([Nlista' fel'])
 disp('Ordning mellan på varandra följande N:')
 disp(ordning)
 
-%% f) f = exp(-(x-pi)^2)
+% f) f = exp(-(x-pi)^2)
 g = @(x) exp(-(x - pi).^2);
 [x, w1] = bvp_fdm(400, g, 0, 0);
 [x, w2] = bvp_fdm(400, g, 1, 0);
