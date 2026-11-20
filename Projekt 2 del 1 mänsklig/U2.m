@@ -6,7 +6,6 @@ d = 5; gamma = 1; delta = 1;
 f    = @(x) d*cos(2*x);
 uanalytisk = @(x) (delta - d/12)*cos(4*x) + gamma/4*sin(4*x) + d/12*cos(2*x);
 
-%d
 [x,w] = bvp_fdm(N, f, gamma, delta);
 
 w_analytisk = uanalytisk(x);
@@ -21,7 +20,7 @@ felvektor = abs(w-w_analytisk);
 
 plot(x,felvektor);
 
-%e
+% e)
 N = 50;
 fel = []
 

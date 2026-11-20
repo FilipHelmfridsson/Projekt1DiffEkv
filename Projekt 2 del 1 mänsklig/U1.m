@@ -2,18 +2,18 @@ clear all; close all;
 
 
 u = @(x) sin(exp(x));
-du = @(x) exp(x).*cos(exp(x));    % exakt derivata
+du = @(x) exp(x).*cos(exp(x));   % exakt derivata
 x  = 0.75;
 k = [1:8];
 h  = 2.^(-k);
 
-% Formel (2) centrerad
+% Formel(2) centrerad
 Derivata2 = (u(x+h)-u(x-h))./(2*h);
 
-% Formel (6) framåt
+% Formel(6) framåt
 Derivata6 = (-u(x+2*h)+4*u(x+h)-3*u(x))./(2*h);
 
-% Formel (7) bakåt
+% Formel(7) bakåt
 Derivata7 = (3*u(x)-4*u(x-h)+u(x-2*h))./(2*h);
 
 % De olika felens noggranhetsordning
@@ -37,11 +37,6 @@ legend('Formel (2)', 'Formel (6)','Formel (7)', 'Referens h^2', 'Location','best
 axis square;
 grid on;
 axis equal;
-% hold on;
-% loglog(h, E6)
-% hold on;
-% loglog(h, E7)
-% hold on;
-% loglog(h, ref)
+
 
 
