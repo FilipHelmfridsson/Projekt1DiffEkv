@@ -39,7 +39,9 @@ TRfcn = @(t) 0;
 [x, w] = varme_euler(N, M, T, D, ffcn, uinitfcn, TLfcn, TRfcn);
 
 plot(x, abs(w - uanalytiskfcn(x, T)))
-xlabel('x'), ylabel('w - u'), title('Fel vid T = 0.01')
+xlabel('x')
+ylabel('w - u')
+title('Fel vid T = 0.01')
 
 maxfel = max(abs(w - uanalytiskfcn(x, T)))
 
