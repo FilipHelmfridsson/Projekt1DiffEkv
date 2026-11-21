@@ -22,20 +22,20 @@ plot(x,felvektor);
 
 % e)
 N = 50;
-fel = []
+fel = [];
 
-for i = [1:4]
-    N = N*2;
+for i = 1:5
     [x, w] = bvp_fdm(N, f, gamma, delta);
     w_analytisk = uanalytisk(x);
     r = w(2:N) - w_analytisk(2:N);             % felet i de inre punkterna
     fel = [fel, sqrt(sum(abs(r.^2)) / (N-1))];
     
+    N = N*2;
+    
 end
 
-noggranhetsordning = log2((fel(1))/fel(2));
-noggranhetsordning1 = log2((fel(2))/fel(3));
-noggranhetsordning2 = log2((fel(3))/fel(4));
+noggranhetsordning = log2(fel(1:end-1) ./ fel(2:end));
+disp([[50, 100, 200, 400, 800]' fel' [NaN, noggranhetsordning]'])
 
 %f)
 N = 400;

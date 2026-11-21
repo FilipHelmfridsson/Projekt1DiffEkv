@@ -26,7 +26,7 @@ function [x, w] = varme_euler(N, M, T, D, ffcn, uinitfcn, TLfcn, TRfcn)
 end
 
 %c)
-uanalytiskfcn = @(x,t) exp(-25*pi^2*D*t) * sin(5*pi*x);
+uanalytiskfcn = @(x,T,D) exp(-25*pi^2*D*T) * sin(5*pi*x);
 
 N = 100; T = 0.01; 
 M = T/1e-5;
@@ -38,20 +38,20 @@ TRfcn = @(t) 0;
 
 [x, w] = varme_euler(N, M, T, D, ffcn, uinitfcn, TLfcn, TRfcn);
 
-plot(x, abs(w - uanalytiskfcn(x, T)))
+plot(x, abs(w - uanalytiskfcn(x, T, D)))
 xlabel('x')
 ylabel('w - u')
 title('Fel vid T = 0.01')
 
-maxfel = max(abs(w - uanalytiskfcn(x, T)))
+maxfel = max(abs(w - uanalytiskfcn(x, T, D)))
 
 
 % d)
 D = 1; 
 M = 1000; % många tidssteg
 for N = [20 50 100]
-    dx = 1/N;
-    dtmax = dx^2/(2*D); % teoretisk gräns
+    h = 1/N;
+    dtmax = h^2/(2*D); % teoretisk gräns
     for faktor = [0.99 1.01 1.05]
         dt = faktor*dtmax;
         T  = M*dt; % sluttid som ger exakt M steg
