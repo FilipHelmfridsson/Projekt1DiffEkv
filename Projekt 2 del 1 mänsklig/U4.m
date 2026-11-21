@@ -2,18 +2,18 @@ clear all;
 close all;
 
 D = 1;
-u_analytisk = @(x,t) sin(exp(t)*x); %exakt lösning
-begynnelse_varme = @(x) u_analytisk(x, 0);
-f = @(x,t) exp(t)*x.*cos(exp(t)*x) + exp(2*t)*sin(exp(t)*x);
-t_vanster = @(t) 0;
-t_hoger = @(t) sin(exp(t));
+uanafcn = @(x,t) sin(exp(t)*x); %exakt lösning
+uinitfcn = @(x) uanafcn(x, 0);
+ffcn = @(x,t) exp(t)*x.*cos(exp(t)*x) + exp(2*t)*sin(exp(t)*x);
+TLfcn = @(t) 0;
+TRfcn = @(t) sin(exp(t));
 
 N = 100; T = 0.1; dt = 1e-3; M = round(T/dt);
-[x, t, U] = varmeledning_theta(D, 1, N, T, M, 0.5, begynnelse_varme, t_vanster, t_hoger, f);
+[x, t, U] = varmeledning_theta(D, 1, N, T, M, 0.5, uinitfcn, TLfcn, TRfcn, ffcn);
 w = U(end,:).'; %Tar sista radien alla klumner för att få stavens temperatur i sista tidssteget
 
-plot(x, w - u_analytisk(x, T)), xlabel('x'), ylabel('w - u')
-maxfel = max(abs(w - u_analytisk(x, T)))
+plot(x, w - uanafcn(x, T)), xlabel('x'), ylabel('w - u')
+maxfel = max(abs(w - uanafcn(x, T)))
 figure;
 
 
@@ -24,9 +24,9 @@ fel = zeros(size(Ns));
 
 for k = 1:length(Ns)
     N = Ns(k);
-    [x, t, U] = varmeledning_theta(D, 1, N, T, N, 0.5, begynnelse_varme, t_vanster, t_hoger, f); %M = N
+    [x, t, U] = varmeledning_theta(D, 1, N, T, N, 0.5, uinitfcn, TLfcn, TRfcn, ffcn); %M = N
     w = U(end,:).';
-    r = w(2:end-1) - u_analytisk(x(2:end-1), T); %fel i inre punkter
+    r = w(2:end-1) - uanafcn(x(2:end-1), T); %fel i inre punkter
     fel(k) = sqrt(mean(r.^2)); %norm (11)
 end
 
@@ -45,22 +45,22 @@ axis equal;
 figure;
 
 N = 100; T = 1; dt = 1e-3; M = round(T/dt);
-[x, t, U] = varmeledning_theta(D, 1, N, T, M, 0.5, begynnelse_varme, t_vanster, t_hoger, f);
+[x, t, U] = varmeledning_theta(D, 1, N, T, M, 0.5, uinitfcn, TLfcn, TRfcn, ffcn);
 w = U(end,:).';
 plot(x, w)
 figure;
 N = 100; T = 2; dt = 1e-3; M = round(T/dt);
-[x, t, U] = varmeledning_theta(D, 1, N, T, M, 0.5, begynnelse_varme, t_vanster, t_hoger, f);
+[x, t, U] = varmeledning_theta(D, 1, N, T, M, 0.5, uinitfcn, TLfcn, TRfcn, ffcn);
 w = U(end,:).';
 plot(x, w)
 figure;
 N = 100; T = 4; dt = 1e-3; M = round(T/dt);
-[x, t, U] = varmeledning_theta(D, 1, N, T, M, 0.5, begynnelse_varme, t_vanster, t_hoger, f);
+[x, t, U] = varmeledning_theta(D, 1, N, T, M, 0.5, uinitfcn, TLfcn, TRfcn, ffcn);
 w = U(end,:).';
 plot(x, w)
 figure;
 N = 100; T = 8; dt = 1e-3; M = round(T/dt);
-[x, t, U] = varmeledning_theta(D, 1, N, T, M, 0.5, begynnelse_varme, t_vanster, t_hoger, f);
+[x, t, U] = varmeledning_theta(D, 1, N, T, M, 0.5, uinitfcn, TLfcn, TRfcn, ffcn);
 w = U(end,:).';
 plot(x, w)
 
